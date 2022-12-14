@@ -1,0 +1,42 @@
+﻿@using System.Configuration
+@using Elastic.Apm
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproducible Elastic APM Config Issue</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+<div class="container body-content">
+    <p>
+        To demonstrate the issue, modify the <code>ElasticApm:Enabled</code> config item in the web.config
+    </p>
+    <p>
+        With <code>ElasticApm:Enabled</code> set to true, <code>ElasticApm:ServerUrl</code> will return the value set in the web.config<br/>
+        With <code>ElasticApm:Enabled</code> set to false, <code>ElasticApm:ServerUrl</code> will return the default value (http://localhost:8200)
+    </p>
+    <table class="table">
+        <tr>
+            <th>Value from Elastic Agent.Config</th>
+            <th>Value from Web.Config</th>
+        </tr>
+        <tr>
+            <td>@Agent.Config.Enabled</td>
+            <td>@ConfigurationManager.AppSettings["ElasticApm:Enabled"]</td>
+        </tr>
+        <tr>
+            <td>@Agent.Config.ServerUrl</td>
+            <td>@ConfigurationManager.AppSettings["ElasticApm:ServerUrl"]</td>
+        </tr>
+    </table>
+
+    <hr/>
+    <div style="display: none">
+        @RenderBody()
+    </div>
+</div>
+</body>
+</html>
